@@ -1,6 +1,6 @@
-﻿namespace EmployeeManagement.Application.Queries.GetEmployeeById;
+﻿namespace EmployeeManagement.Application.Queries.GetEmployees;
 
-public class GetEmployeeByIdQueryResponse
+public class CreateEmployeeCommandResponse 
 {
     public string Id { get; set; }
     public string Name { get; set; }

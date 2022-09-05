@@ -63,17 +63,27 @@ public class EmployeeService : IEmployeeService
     
     public async Task DeleteEmployee(string id) => await _repository.DeleteEmployee(id);
 
-    public async Task AddEmployee(CreateEmployeeCommand employee){
-        
-        await _repository.CreateEmployee(new Employee
+    public async Task<CreateEmployeeCommandResponse> AddEmployee(CreateEmployeeCommand newEmployee)
+    {
+        var employee = new Employee
         {
             Id = ObjectId.GenerateNewId().ToString(),
+            Name = newEmployee.Name,
+            Email = newEmployee.Email,
+            JobTitle = newEmployee.JobTitle,
+            Phone = newEmployee.Phone,
+            ImageUrl = newEmployee.ImageUrl
+        };
+        await _repository.CreateEmployee(employee);
+        return new CreateEmployeeCommandResponse
+        {
+            Id = employee.Id,
             Name = employee.Name,
             Email = employee.Email,
             JobTitle = employee.JobTitle,
             Phone = employee.Phone,
             ImageUrl = employee.ImageUrl
-        });
+        };
     }
 
 }

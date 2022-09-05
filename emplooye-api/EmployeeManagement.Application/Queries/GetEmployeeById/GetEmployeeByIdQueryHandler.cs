@@ -11,8 +11,6 @@ public class GetEmployeeByIdQueryHandler : IRequestHandler<GetEmployeeByIdQuery,
 
     public async Task<GetEmployeeByIdQueryResponse> Handle(GetEmployeeByIdQuery request, CancellationToken cancellationToken)
     {
-        var response = await _service.GetEmployeeById(request.Id);
-        return response;
-        
+        return await _service.GetEmployeeById(request.Id); 
     }
 }

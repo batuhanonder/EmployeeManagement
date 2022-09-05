@@ -1,6 +1,5 @@
 ﻿namespace EmployeeManagement.Application.Commands.CreateEmployee;
-
-public class CreateEmployeeCommand : IRequest
+public class CreateEmployeeCommand : IRequest<CreateEmployeeCommandResponse>
 {
     public string Name { get; set; }
     public string Email{ get; set; }

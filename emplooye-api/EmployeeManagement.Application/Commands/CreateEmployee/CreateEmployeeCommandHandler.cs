@@ -1,6 +1,6 @@
 ﻿namespace EmployeeManagement.Application.Commands.CreateEmployee;
 
-public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeCommand, Unit>
+public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeCommand, CreateEmployeeCommandResponse>
 {
     private readonly IEmployeeService _service;
 
@@ -9,9 +9,8 @@ public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComman
         _service = service;
     }
 
-    public async Task<Unit> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
+    public async Task<CreateEmployeeCommandResponse> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
     {
-        await _service.AddEmployee(request);
-        return Unit.Value;
+        return await _service.AddEmployee(request);;
     }
 }

@@ -10,5 +10,5 @@ public interface IEmployeeService
     Task<GetEmployeeByIdQueryResponse> GetEmployeeById(string id);
     Task UpdateEmployee(UpdateEmployeeCommand employee);
     Task DeleteEmployee(string id);
-    Task AddEmployee(CreateEmployeeCommand employee);
+    Task<CreateEmployeeCommandResponse> AddEmployee(CreateEmployeeCommand employee);
 }
