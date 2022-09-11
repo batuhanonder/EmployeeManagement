@@ -56,14 +56,14 @@ public class EmployeeRepositoryTest
         _repository.Setup(r => r.GetEmployees()).ReturnsAsync(employeeList);
         
         var service = new EmployeeService(_repository.Object);
-        var response = await service.GetAllEmployees(1,10);
+        var (employees, count, pageSize) = await service.GetAllEmployees(1,10);
         
-        response.Item1.First().Id.Should().Be(employeeList.First().Id);
-        response.Item1.First().Name.Should().Be(employeeList.First().Name);
-        response.Item1.First().Email.Should().Be(employeeList.First().Email);
-        response.Item1.First().Phone.Should().Be(employeeList.First().Phone);
-        response.Item1.First().ImageUrl.Should().Be(employeeList.First().ImageUrl);
-        response.Item1.First().JobTitle.Should().Be(employeeList.First().JobTitle);
+        employees.First().Id.Should().Be(employeeList.First().Id);
+        employees.First().Name.Should().Be(employeeList.First().Name);
+        employees.First().Email.Should().Be(employeeList.First().Email);
+        employees.First().Phone.Should().Be(employeeList.First().Phone);
+        employees.First().ImageUrl.Should().Be(employeeList.First().ImageUrl);
+        employees.First().JobTitle.Should().Be(employeeList.First().JobTitle);
     }
     [Fact]
     public async Task GetAllEmployees_thereIsMoreThanOneRecords()
@@ -92,10 +92,10 @@ public class EmployeeRepositoryTest
         _repository.Setup(r => r.GetEmployees()).ReturnsAsync(employeeList);
         
         var service = new EmployeeService(_repository.Object);
-        var response = await service.GetAllEmployees(1,10);
+        var (response, count, pageSize) = await service.GetAllEmployees(1,10);
         
         _repository.Verify(f => f.GetEmployees(), Times.Once);
 
-        response.Item1.Count.Should().Be(employeeList.Count);
+        response.Count.Should().Be(employeeList.Count);
     }
 }
