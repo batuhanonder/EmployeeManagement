@@ -1,4 +1,5 @@
-﻿using EmployeeManagement.Api.Requests;
+﻿using EmployeeManagement.Api.Filters;
+using EmployeeManagement.Api.Requests;
 using EmployeeManagement.Application.Commands.CreateEmployee;
 using EmployeeManagement.Application.Commands.DeleteEmployee;
 using EmployeeManagement.Application.Commands.UpdateEmployee;
@@ -11,33 +12,41 @@ namespace EmployeeManagement.Api.Controllers;
 public class EmployeeController : ControllerBase
 {
     private readonly IMediator _mediator;
-    
+
     public EmployeeController(IMediator mediator)
     {
         _mediator = mediator;
     }
-    
+
     [HttpGet]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> Get([FromQuery] PaginationFilter filter)
     {
-       var response =  await _mediator.Send(new GetEmployeesQuery());
-       
-       if (!response.Any())
-       {
-           return NotFound();
-       }
-       
-       return Ok(response);
+
+        var (employees, totalCount, pageLimit) = await _mediator.Send(new GetEmployeesQuery(filter.PageNumber, filter.PageSize));
+
+        if (!employees.Any())
+        {
+            return NotFound();
+        }
+
+        return Ok(new
+        {
+            TotalCount = totalCount,
+            PageLimit = pageLimit,
+            Employees = employees,
+        });
     }
 
     [HttpGet("{id:length(24)}")]
-    public async Task<IActionResult> Get([FromRoute]string id)
+    public async Task<IActionResult> Get([FromRoute] string id)
     {
         var response = await _mediator.Send(new GetEmployeeByIdQuery(id));
+        
         if (response.Id is null)
         {
             return NotFound();
         }
+
         return Ok(response);
     }
 
@@ -45,7 +54,7 @@ public class EmployeeController : ControllerBase
     public async Task<IActionResult> Post([FromBody] CreateEmployeeCommand createEmployeeCommand)
     {
         var employee = await _mediator.Send(createEmployeeCommand);
-        return Created($"/v1/employees/{employee.Id}",employee);
+        return Created($"/v1/employees/{employee.Id}", employee);
     }
 
     [HttpDelete("{id}")]
@@ -56,10 +65,10 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update([FromRoute]string id, [FromBody] UpdateEmployeeRequest request)
+    public async Task<IActionResult> Update([FromRoute] string id, [FromBody] UpdateEmployeeRequest request)
     {
-        await _mediator.Send(new UpdateEmployeeCommand(id, request.Name, request.Email, request.JobTitle, request.Phone, request.ImageUrl));
+        await _mediator.Send(new UpdateEmployeeCommand(id, request.Name, request.Email, request.JobTitle, request.Phone,
+            request.ImageUrl));
         return NoContent();
     }
-
 }

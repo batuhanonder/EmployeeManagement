@@ -6,7 +6,7 @@ namespace EmployeeManagement.Application.Interfaces;
 
 public interface IEmployeeService
 {
-    Task<List<GetEmployeesQueryResponse>> GetAllEmployees();
+    Task<Tuple<List<GetEmployeesQueryResponse>,int,int>> GetAllEmployees(int pageNumber, int pageSize);
     Task<GetEmployeeByIdQueryResponse> GetEmployeeById(string id);
     Task UpdateEmployee(UpdateEmployeeCommand employee);
     Task DeleteEmployee(string id);

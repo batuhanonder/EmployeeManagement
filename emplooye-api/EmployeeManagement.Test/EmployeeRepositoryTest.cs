@@ -34,7 +34,7 @@ public class EmployeeRepositoryTest
         };
         _repository.Setup(r => r.GetEmployees()).ReturnsAsync(employeeList);
         var service = new EmployeeService(_repository.Object);
-        await service.GetAllEmployees();
+        await service.GetAllEmployees(1,10);
         _repository.Verify(f => f.GetEmployees(), Times.Once);
     }
     
@@ -56,14 +56,14 @@ public class EmployeeRepositoryTest
         _repository.Setup(r => r.GetEmployees()).ReturnsAsync(employeeList);
         
         var service = new EmployeeService(_repository.Object);
-        var response = await service.GetAllEmployees();
+        var response = await service.GetAllEmployees(1,10);
         
-        response.First().Id.Should().Be(employeeList.First().Id);
-        response.First().Name.Should().Be(employeeList.First().Name);
-        response.First().Email.Should().Be(employeeList.First().Email);
-        response.First().Phone.Should().Be(employeeList.First().Phone);
-        response.First().ImageUrl.Should().Be(employeeList.First().ImageUrl);
-        response.First().JobTitle.Should().Be(employeeList.First().JobTitle);
+        response.Item1.First().Id.Should().Be(employeeList.First().Id);
+        response.Item1.First().Name.Should().Be(employeeList.First().Name);
+        response.Item1.First().Email.Should().Be(employeeList.First().Email);
+        response.Item1.First().Phone.Should().Be(employeeList.First().Phone);
+        response.Item1.First().ImageUrl.Should().Be(employeeList.First().ImageUrl);
+        response.Item1.First().JobTitle.Should().Be(employeeList.First().JobTitle);
     }
     [Fact]
     public async Task GetAllEmployees_thereIsMoreThanOneRecords()
@@ -92,10 +92,10 @@ public class EmployeeRepositoryTest
         _repository.Setup(r => r.GetEmployees()).ReturnsAsync(employeeList);
         
         var service = new EmployeeService(_repository.Object);
-        var response = await service.GetAllEmployees();
+        var response = await service.GetAllEmployees(1,10);
         
         _repository.Verify(f => f.GetEmployees(), Times.Once);
 
-        response.Count.Should().Be(employeeList.Count);
+        response.Item1.Count.Should().Be(employeeList.Count);
     }
 }

@@ -13,10 +13,13 @@ public class EmployeeService : IEmployeeService
     {
         _repository = repository;
     }
-    public async Task<List<GetEmployeesQueryResponse>> GetAllEmployees()
+    public async Task<Tuple<List<GetEmployeesQueryResponse>,int,int>> GetAllEmployees(int pageNumber, int pageSize)
     {
         var employees =  await _repository.GetEmployees();
-        var employeesResponses = employees.Select(employee => new GetEmployeesQueryResponse
+        
+        var filteredEmployee = employees.Skip((pageNumber - 1) * pageSize).Take(pageSize); 
+        
+        var employeesResponses = filteredEmployee.Select(employee => new GetEmployeesQueryResponse
             {
                 Id = employee.Id,
                 Name = employee.Name,
@@ -25,7 +28,8 @@ public class EmployeeService : IEmployeeService
                 Phone = employee.Phone,
                 ImageUrl = employee.ImageUrl
             }).ToList();
-        return employeesResponses;
+        
+        return new Tuple<List<GetEmployeesQueryResponse>,int,int>(employeesResponses, employees.Count, (employees.Count/pageSize)+1);
     }
 
     public async Task<GetEmployeeByIdQueryResponse> GetEmployeeById(string id) 
