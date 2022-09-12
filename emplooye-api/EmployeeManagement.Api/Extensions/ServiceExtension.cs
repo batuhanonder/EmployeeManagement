@@ -1,18 +1,24 @@
 ﻿
 
+using System.Reflection;
+using EmployeeManagement.Domain.Entities;
+using EmployeeManagement.Infrastructure.Validations;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+
 namespace EmployeeManagement.Api.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 public static class ServiceExtension
 {
 
+   
     public static void AddServices(this IServiceCollection services)
     {
         services.AddControllers().AddJsonOptions(
-            options => options.JsonSerializerOptions.PropertyNamingPolicy = null);;
+            options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
 
         services.AddHealthChecks();
-        
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
 
@@ -24,9 +30,10 @@ public static class ServiceExtension
             var client = new MongoClient(settings.ConnectionString);
             return client.GetDatabase(settings.DatabaseName);
         });
-
+        
         services.AddTransient<IEmployeeRepository, EmployeeRepository>();
         services.AddScoped<IEmployeeService, EmployeeService>();
+        services.AddScoped<IValidator<Employee>, EmployeeValidator>();
     }
 
     public static void AddCorsConfiguration(this IServiceCollection services)
