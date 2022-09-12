@@ -1,4 +1,5 @@
 using EmployeeManagement.Api.Extensions;
+using EmployeeManagement.Api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.ConfigureExceptionHandler();
 app.UseCors("ApiCorsPolicy");  
 app.UseHttpsRedirection();
 app.UseAuthorization();
