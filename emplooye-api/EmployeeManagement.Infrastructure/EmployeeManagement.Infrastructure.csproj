@@ -20,9 +20,4 @@
       <PackageReference Include="MongoDB.Driver" Version="2.17.1" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="DbContexts" />
-      <Folder Include="Interfaces" />
-    </ItemGroup>
-
 </Project>

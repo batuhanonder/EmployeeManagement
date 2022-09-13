@@ -1,13 +1,4 @@
-﻿using EmployeeManagement.Application.Interfaces;
-using AutoFixture;
-using EmployeeManagement.Application.Queries.GetEmployees;
-using EmployeeManagement.Domain.Entities;
-using EmployeeManagement.Infrastructure.Services;
-using EmployeeManagement.Infrastructure.Validations;
-using Moq;
-using FluentAssertions;
-
-namespace EmployeeManagement.Test;
+﻿namespace EmployeeManagement.Test;
 
 public class EmployeeRepositoryTest
 {
@@ -34,7 +25,7 @@ public class EmployeeRepositoryTest
             }
         };
         _repository.Setup(r => r.GetEmployees()).ReturnsAsync(employeeList);
-        var service = new EmployeeService(_repository.Object, new EmployeeValidator());
+        var service = new EmployeeService(_repository.Object);
         await service.GetAllEmployees(1,10);
         _repository.Verify(f => f.GetEmployees(), Times.Once);
     }
@@ -56,7 +47,7 @@ public class EmployeeRepositoryTest
         };
         _repository.Setup(r => r.GetEmployees()).ReturnsAsync(employeeList);
         
-        var service = new EmployeeService(_repository.Object,new EmployeeValidator());
+        var service = new EmployeeService(_repository.Object);
         var (employees, count, pageSize) = await service.GetAllEmployees(1,10);
         
         employees.First().Id.Should().Be(employeeList.First().Id);
@@ -92,7 +83,7 @@ public class EmployeeRepositoryTest
         };
         _repository.Setup(r => r.GetEmployees()).ReturnsAsync(employeeList);
         
-        var service = new EmployeeService(_repository.Object, new EmployeeValidator());
+        var service = new EmployeeService(_repository.Object);
         var (response, count, pageSize) = await service.GetAllEmployees(1,10);
         
         _repository.Verify(f => f.GetEmployees(), Times.Once);
