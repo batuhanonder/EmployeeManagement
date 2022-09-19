@@ -1,4 +1,6 @@
-﻿namespace EmployeeManagement.Application.Commands.DeleteEmployee;
+﻿using EmployeeManagement.Application.Interfaces.Employee;
+
+namespace EmployeeManagement.Application.Commands.DeleteEmployee;
 
 public class DeleteEmployeeCommandHandler : IRequestHandler<DeleteEmployeeCommand, Unit>
 {

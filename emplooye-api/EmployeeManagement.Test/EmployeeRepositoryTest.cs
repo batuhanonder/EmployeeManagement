@@ -1,4 +1,6 @@
-﻿namespace EmployeeManagement.Test;
+﻿using EmployeeManagement.Application.Interfaces.Employee;
+
+namespace EmployeeManagement.Test;
 
 public class EmployeeRepositoryTest
 {

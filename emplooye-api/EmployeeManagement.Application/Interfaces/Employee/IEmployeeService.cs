@@ -1,4 +1,4 @@
-﻿namespace EmployeeManagement.Application.Interfaces;
+﻿namespace EmployeeManagement.Application.Interfaces.Employee;
 
 public interface IEmployeeService
 {

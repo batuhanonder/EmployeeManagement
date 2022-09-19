@@ -1,4 +1,6 @@
-﻿namespace EmployeeManagement.Infrastructure.Services;
+﻿using EmployeeManagement.Application.Interfaces.Employee;
+
+namespace EmployeeManagement.Infrastructure.Services;
 
 public class EmployeeService : IEmployeeService
 {

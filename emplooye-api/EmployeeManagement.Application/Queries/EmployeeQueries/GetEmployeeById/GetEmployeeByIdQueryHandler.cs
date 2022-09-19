@@ -1,4 +1,6 @@
-﻿namespace EmployeeManagement.Application.Queries.GetEmployeeById;
+﻿using EmployeeManagement.Application.Interfaces.Employee;
+
+namespace EmployeeManagement.Application.Queries.GetEmployeeById;
 
 public class GetEmployeeByIdQueryHandler : IRequestHandler<GetEmployeeByIdQuery, GetEmployeeByIdQueryResponse>
 {
