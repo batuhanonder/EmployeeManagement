@@ -1,21 +1,16 @@
-﻿using EmployeeManagement.Application.Commands.CreateEmployee;
-using EmployeeManagement.Application.Commands.UpdateEmployee;
-using EmployeeManagement.Application.Queries.GetEmployeeById;
-using FluentValidation;
-using MongoDB.Bson;
+﻿using EmployeeManagement.Application.Interfaces.Employee;
 
 namespace EmployeeManagement.Infrastructure.Services;
 
 public class EmployeeService : IEmployeeService
 {
     private readonly IEmployeeRepository _repository;
-    private readonly IValidator<Employee> _validator;
 
-    public EmployeeService(IEmployeeRepository repository, IValidator<Employee> validator)
+    public EmployeeService(IEmployeeRepository repository)
     {
         _repository = repository;
-        _validator = validator;
     }
+    
     public async Task<Tuple<List<GetEmployeesQueryResponse>,int,int>> GetAllEmployees(int pageNumber, int pageSize)
     {
         var employees =  await _repository.GetEmployees();
@@ -81,8 +76,7 @@ public class EmployeeService : IEmployeeService
             Phone = newEmployee.Phone,
             ImageUrl = newEmployee.ImageUrl
         };
-        await _validator.ValidateAsync(employee, options => options.ThrowOnFailures());
-       
+
         await _repository.CreateEmployee(employee);
         return new CreateEmployeeCommandResponse
         {

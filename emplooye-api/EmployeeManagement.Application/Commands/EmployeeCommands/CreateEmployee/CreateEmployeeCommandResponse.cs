@@ -1,4 +1,4 @@
-﻿namespace EmployeeManagement.Application.Queries.GetEmployees;
+﻿namespace EmployeeManagement.Application.Commands.CreateEmployee;
 
 public class CreateEmployeeCommandResponse 
 {

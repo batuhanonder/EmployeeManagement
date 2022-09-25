@@ -5,7 +5,6 @@ using Serilog;
 using Serilog.Exceptions;
 using Serilog.Sinks.Elasticsearch;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 ConfigureLogs();
@@ -15,6 +14,7 @@ builder.Services.AddScopes(builder.Configuration);
 builder.Services.AddCorsConfiguration();
 builder.Services.AddMediatr();
 builder.Services.AddServices();
+builder.Services.AddAuthentications(builder.Configuration);
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
@@ -26,7 +26,10 @@ if (app.Environment.IsDevelopment())
 app.ConfigureExceptionHandler();
 app.UseCors("ApiCorsPolicy");  
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 app.UseAuthorization();
+
 
 var option = new RewriteOptions();
 option.AddRedirect("^$", "swagger").AddRedirectToHttpsPermanent();;
@@ -41,18 +44,15 @@ app.Run();
 #region helper
 void ConfigureLogs()
 {
-    // Get the environment which the application is running on
     var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
     
-    // Get the configuration 
     var configuration = new ConfigurationBuilder()
         .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
         .Build();
 
-    // Create Logger
     Log.Logger = new LoggerConfiguration()
         .Enrich.FromLogContext()
-        .Enrich.WithExceptionDetails() // Adds details exception
+        .Enrich.WithExceptionDetails() 
         .WriteTo.Debug()
         .WriteTo.Console()
         .WriteTo.Elasticsearch(ConfigureELS(configuration, env))
