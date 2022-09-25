@@ -1,6 +1,4 @@
-﻿using EmployeeManagement.Application.Interfaces.Employee;
-
-namespace EmployeeManagement.Application.Commands.UpdateEmployee;
+﻿namespace EmployeeManagement.Application.Commands.UpdateEmployee;
 
 public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeCommand, Unit>
 {

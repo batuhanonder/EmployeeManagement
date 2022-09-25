@@ -1,6 +1,4 @@
-﻿using EmployeeManagement.Application.Interfaces.Employee;
-
-namespace EmployeeManagement.Application.Commands.CreateEmployee;
+﻿namespace EmployeeManagement.Application.Commands.CreateEmployee;
 
 public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeCommand, CreateEmployeeCommandResponse>
 {
@@ -13,6 +11,6 @@ public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComman
 
     public async Task<CreateEmployeeCommandResponse> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
     {
-        return await _service.AddEmployee(request);
+        return await _service.AddEmployee(request);;
     }
 }

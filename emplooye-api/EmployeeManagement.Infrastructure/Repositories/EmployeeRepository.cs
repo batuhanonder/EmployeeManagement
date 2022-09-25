@@ -1,6 +1,4 @@
-﻿using EmployeeManagement.Application.Interfaces.Employee;
-
-namespace EmployeeManagement.Infrastructure.Repositories;
+﻿namespace EmployeeManagement.Infrastructure.Repositories;
 
 public class EmployeeRepository : IEmployeeRepository
 {

@@ -1,7 +1,18 @@
-﻿namespace EmployeeManagement.Application.Validations;
-public class UpdateEmployeeCommandValidator :  AbstractValidator<UpdateEmployeeCommand>
+﻿using FluentValidation;
+
+namespace EmployeeManagement.Infrastructure.Validations;
+
+public class EmployeeValidator : AbstractValidator<Employee>
 {
-    public UpdateEmployeeCommandValidator()
+    public EmployeeValidator()
+    {
+        Include(new EmployeeAllFieldValidator());
+    }
+}
+
+public class EmployeeAllFieldValidator : AbstractValidator<Employee>
+{
+    public EmployeeAllFieldValidator()
     {
         RuleFor(e => e.Id).NotNull().NotEmpty();
         RuleFor(e => e.Name).MaximumLength(50).NotNull().WithMessage("The Name field cannot exceed 50 characters or entry surname.");

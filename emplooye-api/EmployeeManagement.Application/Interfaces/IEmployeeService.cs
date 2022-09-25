@@ -1,4 +1,8 @@
-﻿namespace EmployeeManagement.Application.Interfaces.Employee;
+﻿using EmployeeManagement.Application.Commands.CreateEmployee;
+using EmployeeManagement.Application.Commands.UpdateEmployee;
+using EmployeeManagement.Application.Queries.GetEmployeeById;
+
+namespace EmployeeManagement.Application.Interfaces;
 
 public interface IEmployeeService
 {

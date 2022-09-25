@@ -1,6 +1,4 @@
-﻿using EmployeeManagement.Application.Interfaces.Employee;
-
-namespace EmployeeManagement.Application.Queries.GetEmployees;
+﻿namespace EmployeeManagement.Application.Queries.GetEmployees;
 
 public class GetEmployeesQueryHandler : IRequestHandler<GetEmployeesQuery, Tuple<List<GetEmployeesQueryResponse>,int,int>>
 {
