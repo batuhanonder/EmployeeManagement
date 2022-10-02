@@ -1,10 +1,4 @@
-﻿using EmployeeManagement.Api.Filters;
-using EmployeeManagement.Application.Commands.IdentityCommands.LoginCommand;
-using EmployeeManagement.Application.Commands.IdentityCommands.RegisterCommand;
-using EmployeeManagement.Application.Queries.IdentityQueries;
-using Microsoft.AspNetCore.Authorization;
-
-namespace EmployeeManagement.Api.Controllers;
+﻿namespace EmployeeManagement.Api.Controllers;
 
 [ApiController]
 [Route("v1/accounts")]
@@ -47,16 +41,6 @@ public class SecurityController : ControllerBase
         return Created($"/v1/employees/", response);
     }
 
-    [Authorize(Roles = "Administrator")]
-    [HttpGet]
-    public async Task<IActionResult> Get([FromQuery] PaginationFilter filter)
-    {
-        var response = await _mediator.Send(new GetAllIdentity(filter.PageNumber, filter.PageSize));
-        if (!response.Any())
-        {
-            return NotFound();
-        }
-        return Ok(response);
-    }
+   
     
 }

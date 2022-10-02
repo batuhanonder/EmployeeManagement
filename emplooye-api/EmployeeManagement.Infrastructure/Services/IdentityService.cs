@@ -3,7 +3,6 @@ using System.Security.Claims;
 using EmployeeManagement.Application.Commands.IdentityCommands.LoginCommand;
 using EmployeeManagement.Application.Commands.IdentityCommands.RegisterCommand;
 using EmployeeManagement.Application.Interfaces.Identity;
-using EmployeeManagement.Application.Queries.IdentityQueries;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -18,15 +17,6 @@ public class IdentityService : IIdentityService
     {
         _repository = repository;
         _configuration = configuration;
-    }
-
-
-    public async Task<List<GetAllIdentityResponse>> GetAllIdentity(int pageNumber, int pageSize)
-    {
-        var users = await _repository.GetIdentities();
-        var pagedUserList =  users.Skip((pageNumber - 1) * pageSize).Take(pageSize);
-
-        return pagedUserList.Select(user => new GetAllIdentityResponse { HasRoles = user.HasRoles.ToArray(), Username = user.Username, email = user.email, PhoneNumber = user.PhoneNumber }).ToList();
     }
 
     public async Task<Identity> GetIdentityById(string id) => await _repository.GetIdentityById(id);

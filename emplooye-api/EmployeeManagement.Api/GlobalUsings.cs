@@ -2,6 +2,8 @@
 
 global using EmployeeManagement.Api.Requests;
 global using EmployeeManagement.Application.Behaviours;
+global using EmployeeManagement.Application.Commands.IdentityCommands.LoginCommand;
+global using EmployeeManagement.Application.Commands.IdentityCommands.RegisterCommand;
 global using Microsoft.AspNetCore.Mvc;
 global using EmployeeManagement.Application.Interfaces;
 global using EmployeeManagement.Application.Queries.GetEmployees;
